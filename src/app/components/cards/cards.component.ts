@@ -1,4 +1,7 @@
 import {Component, OnInit, ChangeDetectionStrategy, Input} from '@angular/core';
+import {MatDialog} from '@angular/material';
+import {filter} from 'rxjs/operators';
+import {AddCardDialogComponent} from '../add-card-dialog/add-card-dialog.component';
 import {Serie} from '../models/serie.model';
 
 @Component({
@@ -7,15 +10,25 @@ import {Serie} from '../models/serie.model';
     styleUrls: ['./cards.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CardsComponent implements OnInit {
+export class CardsComponent  {
 
     @Input('serie')
     public serie: Serie;
 
-    constructor() {
+    constructor(public dialog: MatDialog) {
     }
 
-    ngOnInit() {
+    add() {
+        const dialogRef = this.dialog.open(AddCardDialogComponent, {
+            width: '250px',
+            data: {card: undefined}
+        });
+
+        dialogRef.afterClosed().pipe(
+                filter(result => !!result)
+        ).subscribe(result => {
+            console.log('Adicionando o card', result);
+        });
     }
 
 }

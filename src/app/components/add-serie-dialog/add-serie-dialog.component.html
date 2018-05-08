@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Adicionar Série</h1>
+<div mat-dialog-content>
+	<p>Qual o nome da Série?</p>
+	<mat-form-field>
+		<input matInput [(ngModel)]="data.serie">
+	</mat-form-field>
+</div>
+<div mat-dialog-actions>
+	<button mat-button (click)="onNoClick()">Cancelar</button>
+	<button mat-button [mat-dialog-close]="data.serie" cdkFocusInitial>Adicionar</button>
+</div>

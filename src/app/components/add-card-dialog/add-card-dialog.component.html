@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Adicionar Card</h1>
+<div mat-dialog-content>
+	<p>Qual o número do card?</p>
+	<mat-form-field>
+		<input type="number" matInput [(ngModel)]="data.card">
+	</mat-form-field>
+</div>
+<div mat-dialog-actions>
+	<button mat-button (click)="onNoClick()">Cancelar</button>
+	<button mat-button [mat-dialog-close]="data.card" cdkFocusInitial>Adicionar</button>
+</div>

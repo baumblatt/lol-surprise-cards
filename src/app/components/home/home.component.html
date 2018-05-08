@@ -4,6 +4,6 @@
 	</mat-toolbar-row>
 </mat-toolbar>
 <app-cards *ngFor="let serie of series | async" [serie]="serie"></app-cards>
-<button class="add-serie" mat-mini-fab>
+<button class="add-serie" (click)="add()" mat-mini-fab>
 	<mat-icon>add</mat-icon>
 </button>

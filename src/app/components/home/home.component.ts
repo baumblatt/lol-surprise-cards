@@ -1,6 +1,9 @@
-import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
+import {MatDialog} from '@angular/material';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {Observable} from 'rxjs';
+import {filter} from 'rxjs/operators';
+import {AddSerieDialogComponent} from '../add-serie-dialog/add-serie-dialog.component';
 import {Serie} from '../models/serie.model';
 
 
@@ -10,17 +13,26 @@ import {Serie} from '../models/serie.model';
     styleUrls: ['./home.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
     series: Observable<Serie[]>;
 
-    constructor(db: AngularFirestore) {
-        db.firestore.settings({ timestampsInSnapshots: true });
+    constructor(public dialog: MatDialog, db: AngularFirestore) {
+        db.firestore.settings({timestampsInSnapshots: true});
         this.series = db.collection<Serie>('laura').valueChanges();
     }
 
+    add() {
+        const dialogRef = this.dialog.open(AddSerieDialogComponent, {
+            width: '250px',
+            data: {name: undefined}
+        });
 
-    ngOnInit() {
+        dialogRef.afterClosed().pipe(
+                filter(result => !!result)
+        ).subscribe(result => {
+            console.log('Adicionando a série', result);
+        });
     }
 
 }
