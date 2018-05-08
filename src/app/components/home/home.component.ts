@@ -1,8 +1,9 @@
 import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {MatDialog} from '@angular/material';
-import {AngularFirestore} from 'angularfire2/firestore';
+import {AngularFirestore, DocumentChangeAction} from 'angularfire2/firestore';
+import {AngularFirestoreCollection} from 'angularfire2/firestore/collection/collection';
 import {Observable} from 'rxjs';
-import {filter} from 'rxjs/operators';
+import {filter, tap} from 'rxjs/operators';
 import {AddSerieDialogComponent} from '../add-serie-dialog/add-serie-dialog.component';
 import {Serie} from '../models/serie.model';
 
@@ -15,11 +16,18 @@ import {Serie} from '../models/serie.model';
 })
 export class HomeComponent {
 
+    collection: AngularFirestoreCollection<Serie>;
+    changes: Observable<DocumentChangeAction[]>;
     series: Observable<Serie[]>;
 
-    constructor(public dialog: MatDialog, db: AngularFirestore) {
+    constructor(public dialog: MatDialog, public db: AngularFirestore) {
         db.firestore.settings({timestampsInSnapshots: true});
-        this.series = db.collection<Serie>('laura').valueChanges();
+        this.collection = db.collection<Serie>('laura');
+        this.series = this.collection.valueChanges();
+
+        this.changes = this.collection.snapshotChanges().pipe(
+                tap(changes => console.log(changes)),
+        );
     }
 
     add() {
@@ -32,6 +40,9 @@ export class HomeComponent {
                 filter(result => !!result)
         ).subscribe(result => {
             console.log('Adicionando a série', result);
+
+            this.collection.add({name: result, cards: []})
+                    .catch(reason => console.log(reason));
         });
     }
 

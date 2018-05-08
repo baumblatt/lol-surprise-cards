@@ -7,7 +7,7 @@
 	<mat-card-content>
 		<mat-grid-list cols="4" rowHeight="2:1" [gutterSize]="7">
 			<mat-grid-tile *ngFor="let card of serie.cards">
-				<button mat-raised-button color="accent">
+				<button mat-raised-button color="accent" (click)="remove(card)">
 					{{card}}
 				</button>
 			</mat-grid-tile>

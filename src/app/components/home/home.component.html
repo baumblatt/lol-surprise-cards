@@ -3,7 +3,7 @@
 		<span>LOL Surprise Cards</span>
 	</mat-toolbar-row>
 </mat-toolbar>
-<app-cards *ngFor="let serie of series | async" [serie]="serie"></app-cards>
+<app-cards *ngFor="let change of changes | async" [document]="change" [serie]="change.payload.doc.data()"></app-cards>
 <button class="add-serie" (click)="add()" mat-mini-fab>
 	<mat-icon>add</mat-icon>
 </button>
