@@ -10,7 +10,7 @@ export class AddSerieDialogComponent {
 
     constructor(
             public dialogRef: MatDialogRef<AddSerieDialogComponent>,
-            @Inject(MAT_DIALOG_DATA) public data: { card: number }) {
+            @Inject(MAT_DIALOG_DATA) public data: { serie: number }) {
     }
 
     onNoClick(): void {
