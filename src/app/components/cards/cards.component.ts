@@ -4,6 +4,7 @@ import {DocumentChangeAction} from 'angularfire2/firestore';
 import {filter} from 'rxjs/operators';
 import {AddCardDialogComponent} from '../add-card-dialog/add-card-dialog.component';
 import {Serie} from '../models/serie.model';
+import {RemoveCardDialogComponent} from '../remove-card-dialog/remove-card-dialog.component';
 
 @Component({
     selector: 'app-cards',
@@ -26,20 +27,28 @@ export class CardsComponent {
     }
 
     remove(card) {
-        if (confirm(`Você deseja excluir o card ${card}?`)) {
+        const dialogRef = this.dialog.open(RemoveCardDialogComponent, {
+            width: '250px',
+            data: {card: card}
+        });
 
-            const cards = [...this.serie.cards];
-            cards.splice(cards.indexOf(card), 1);
+        dialogRef.afterClosed().pipe(
+                filter(result => !!result)
+        ).subscribe(
+                () => {
+                    const cards = [...this.serie.cards];
+                    cards.splice(cards.indexOf(card), 1);
 
-            const serie = {
-                ...this.serie,
-                cards
-            };
+                    const serie = {
+                        ...this.serie,
+                        cards
+                    };
 
-            this.document.payload.doc.ref.update(serie).catch(
-                    error => console.log(error)
-            );
-        }
+                    this.document.payload.doc.ref.update(serie).catch(
+                            error => console.log(error)
+                    );
+                }
+        );
     }
 
     add() {

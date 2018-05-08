@@ -26,6 +26,7 @@ import {CardsComponent} from './components/cards/cards.component';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {AddSerieDialogComponent} from './components/add-serie-dialog/add-serie-dialog.component';
 import {AddCardDialogComponent} from './components/add-card-dialog/add-card-dialog.component';
+import { RemoveCardDialogComponent } from './components/remove-card-dialog/remove-card-dialog.component';
 
 @NgModule({
     declarations: [
@@ -35,6 +36,7 @@ import {AddCardDialogComponent} from './components/add-card-dialog/add-card-dial
         CardsComponent,
         AddSerieDialogComponent,
         AddCardDialogComponent,
+        RemoveCardDialogComponent,
     ],
     imports: [
         AppRoutingModule,
@@ -58,7 +60,7 @@ import {AddCardDialogComponent} from './components/add-card-dialog/add-card-dial
     ],
     providers: [],
     bootstrap: [AppComponent],
-    entryComponents: [AddSerieDialogComponent, AddCardDialogComponent]
+    entryComponents: [AddSerieDialogComponent, AddCardDialogComponent, RemoveCardDialogComponent]
 })
 export class AppModule {
 }

@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Adicionar Card</h1>
+<div mat-dialog-content>
+	<p>Deseja realmente remover o card {{data.card}}?</p>
+</div>
+<div mat-dialog-actions>
+	<button mat-button (click)="cancel()">Cancelar</button>
+	<button mat-button (click)="remove()" cdkFocusInitial>Remover</button>
+</div>
