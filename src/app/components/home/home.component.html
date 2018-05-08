@@ -1,0 +1,9 @@
+<mat-toolbar color="primary">
+	<mat-toolbar-row>
+		<span>LOL Surprise Cards</span>
+	</mat-toolbar-row>
+	<mat-toolbar-row>
+		<span>Laura Baumblatt</span>
+	</mat-toolbar-row>
+</mat-toolbar>
+<app-cards *ngFor="let serie of series | async" [serie]="serie"></app-cards>
